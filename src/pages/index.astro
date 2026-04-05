@@ -100,7 +100,7 @@ const X_URL = 'https://x.com/masafumi330';
     </main>
 
     <footer class="fade-up delay-3">
-      <p>© 2025 Masafumi Misawa</p>
+      <p>© {new Date().getFullYear()} Masafumi Misawa</p>
     </footer>
   </body>
 </html>
@@ -314,7 +314,12 @@ const X_URL = 'https://x.com/masafumi330';
   /* ── Responsive ── */
   @media (max-width: 480px) {
     main {
-      padding: 3.5rem 0 2rem;
+      padding: 3.5rem 1rem 2rem;
+      gap: 3rem;
+    }
+
+    footer {
+      padding: 1rem 1rem;
       gap: 3rem;
     }
 

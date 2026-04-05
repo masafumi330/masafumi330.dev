@@ -1,4 +1,6 @@
 ---
+import Nav from '../components/Nav.astro';
+
 const GITHUB_URL = 'https://github.com/masafumi330';
 const X_URL = 'https://x.com/masafumi330';
 ---
@@ -21,6 +23,7 @@ const X_URL = 'https://x.com/masafumi330';
   </head>
 
   <body>
+    <Nav />
     <main>
       <!-- Hero -->
       <section class="hero">
@@ -149,7 +152,7 @@ const X_URL = 'https://x.com/masafumi330';
     width: 100%;
     max-width: var(--max-w);
     flex: 1;
-    padding: 5rem 0 3rem;
+    padding: 3rem 0 3rem;
     display: flex;
     flex-direction: column;
     gap: 4rem;

@@ -1,63 +1,356 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>About — Masafumi Misawa</title>
+    <meta name="description" content="Software Engineer based in Japan. Building web apps with Go and MySQL." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <body>
+    <nav class="nav fade-up">
+      <a href="/" class="nav-back">← Home</a>
+    </nav>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+    <main>
+      <!-- About Me -->
+      <section class="about fade-up delay-1">
+        <img src="/avatar.png" alt="Masafumi Misawa" class="avatar" width="80" height="80" />
+        <div>
+          <h1 class="section-title">About me</h1>
+          <p class="bio">
+            妻と娘と日本で暮らしています。<br />
+            Tunecire Japan で Go と MySQL を使ったWebアプリを開発しています。<br />
+            音楽が大好きです。
+          </p>
+        </div>
+      </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+      <!-- Skills -->
+      <section class="fade-up delay-2">
+        <h2 class="section-title">Skills</h2>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+        <div class="skill-groups">
+          <div class="skill-group">
+            <h3 class="skill-group-label">Backend</h3>
+            <ul class="skill-list">
+              <li>Go (Echo)</li>
+              <li>Perl</li>
+              <li>MySQL</li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h3 class="skill-group-label">Frontend</h3>
+            <ul class="skill-list">
+              <li>HTML / CSS</li>
+              <li>JavaScript / TypeScript</li>
+              <li>React, Next.js</li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h3 class="skill-group-label">Infrastructure</h3>
+            <ul class="skill-list">
+              <li>Docker</li>
+              <li>AWS</li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h3 class="skill-group-label">Tools</h3>
+            <ul class="skill-list">
+              <li>Git, GitHub, GitHub Actions</li>
+              <li>Editor: Neovim</li>
+              <li>Terminal: WezTerm</li>
+              <li>Shell: zsh</li>
+              <li>macOS</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Background -->
+      <section class="fade-up delay-3">
+        <h2 class="section-title">Background</h2>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+              <span class="timeline-date">2020 / 3</span>
+              <p class="timeline-desc">電気通信大学　卒業</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+              <span class="timeline-date">2020 / 4 〜</span>
+              <p class="timeline-title">株式会社デンソーテン</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div class="timeline-content">
+              <span class="timeline-date">2022 / 1 〜</span>
+              <p class="timeline-title">Wano株式会社</p>
+              <p class="timeline-desc">Tunocore Japan の開発</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="fade-up delay-4">
+      <p>© {new Date().getFullYear()} Masafumi Misawa</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #0f0f0f;
+    --fg: #e8e8e8;
+    --fg-muted: #888;
+    --accent: #c8f5a0;
+    --border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.04);
+    --font-mono: 'DM Mono', 'Fira Mono', monospace;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+    --max-w: 640px;
+  }
+
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1.5rem;
+  }
+
+  /* ── Nav ── */
+  .nav {
+    width: 100%;
+    max-width: var(--max-w);
+    padding: 2rem 0 0;
+  }
+
+  .nav-back {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-back:hover {
+    color: var(--accent);
+  }
+
+  /* ── Layout ── */
+  main {
+    width: 100%;
+    max-width: var(--max-w);
+    flex: 1;
+    padding: 3rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  footer {
+    width: 100%;
+    max-width: var(--max-w);
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── About ── */
+  .about {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--card-bg);
+  }
+
+  .bio {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    line-height: 1.9;
+  }
+
+  /* ── Skills ── */
+  .skill-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .skill-group-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .skill-list li {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .skill-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 2rem 1.5rem;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -0.45rem;
+    top: 0.35rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .delay-1 { animation-delay: 0.05s; }
+  .delay-2 { animation-delay: 0.15s; }
+  .delay-3 { animation-delay: 0.25s; }
+  .delay-4 { animation-delay: 0.35s; }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    main {
+      padding: 2rem 0 2rem;
+      gap: 3rem;
+    }
+
+    .about {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+</style>

@@ -1,63 +1,360 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+const skills = {
+  Backend: ['Go', 'MySQL', 'REST API'],
+  Frontend: ['HTML/CSS', 'JavaScript/TypeScript', 'React'],
+  Infrastructure: ['Docker', 'AWS', 'GitHub Actions'],
+  Misc: ['Git', 'GitHub', 'Linux'],
+};
+
+const background = [
+  {
+    year: '20XX',
+    place: '○○大学 / ○○学部',
+    description:
+      'ここに学歴や職歴の説明を入れてください。どんなことを学んだか、どんな経験をしたかを書きます。',
+  },
+  {
+    year: '20XX',
+    place: 'Tunecire Japan',
+    description:
+      'Go と MySQL を使ったWebアプリの開発に従事。バックエンドAPIの設計・実装を中心に担当。',
+  },
+];
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>About — Masafumi Misawa</title>
+    <meta name="description" content="About Masafumi Misawa, Software Engineer based in Japan." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <body>
+    <header class="site-header fade-up">
+      <a href="/" class="back-link">
+        <span class="back-arrow">←</span> Home
+      </a>
+    </header>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+    <main>
+      <!-- About me -->
+      <section class="about-me fade-up delay-1">
+        <h1 class="section-title">About me</h1>
+        <div class="profile">
+          <img src="/avatar.png" alt="Masafumi Misawa" class="avatar" width="80" height="80" />
+          <p class="bio">
+            妻と娘と日本で暮らしているソフトウェアエンジニアです。
+            Tunecire Japan で Go と MySQL を使ったWebアプリの開発をしています。
+            音楽が大好きで、コードを書いていないときは音楽を聴いています。
+          </p>
+        </div>
+      </section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+      <!-- Skills -->
+      <section class="skills fade-up delay-2">
+        <h2 class="section-title">Skills</h2>
+        {
+          Object.entries(skills).map(([category, items]) => (
+            <div class="skill-group">
+              <h3 class="skill-category">{category}</h3>
+              <ul class="skill-list">
+                {items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+      <!-- Background -->
+      <section class="background fade-up delay-3">
+        <h2 class="section-title">Background</h2>
+        <ol class="timeline">
+          {
+            background.map((item) => (
+              <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true" />
+                <div class="timeline-content">
+                  <span class="timeline-year">{item.year}</span>
+                  <strong class="timeline-place">{item.place}</strong>
+                  <p class="timeline-desc">{item.description}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+    </main>
+
+    <footer class="fade-up delay-4">
+      <p>© 2025 Masafumi Misawa</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #0f0f0f;
+    --fg: #e8e8e8;
+    --fg-muted: #888;
+    --accent: #c8f5a0;
+    --border: rgba(255, 255, 255, 0.08);
+    --font-mono: 'DM Mono', 'Fira Mono', monospace;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+    --max-w: 640px;
+  }
+
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    width: 100%;
+    max-width: var(--max-w);
+    padding: 1.75rem 0 0;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .back-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .back-link:hover .back-arrow {
+    transform: translateX(-3px);
+  }
+
+  /* ── Main layout ── */
+  main {
+    width: 100%;
+    max-width: var(--max-w);
+    flex: 1;
+    padding: 3.5rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  footer {
+    width: 100%;
+    max-width: var(--max-w);
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── About me ── */
+  .profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .bio {
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    line-height: 1.9;
+  }
+
+  /* ── Skills ── */
+  .skill-group {
+    margin-bottom: 1.75rem;
+  }
+
+  .skill-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .skill-category {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 0.6rem;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .skill-list li {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .skill-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ── Background / Timeline ── */
+  .timeline {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1px solid var(--border);
+    padding-left: 0;
+    margin-left: 0.5rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 0 0 2rem 1.5rem;
+    position: relative;
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -0.45rem;
+    top: 0.35rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .timeline-year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-place {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.4;
+  }
+
+  .timeline-desc {
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+    line-height: 1.8;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .delay-1 { animation-delay: 0.05s; }
+  .delay-2 { animation-delay: 0.15s; }
+  .delay-3 { animation-delay: 0.25s; }
+  .delay-4 { animation-delay: 0.35s; }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .profile {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    main {
+      padding: 2.5rem 0 2rem;
+      gap: 3rem;
+    }
+  }
+</style>

@@ -2,95 +2,38 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
-import Footer from '../components/Footer.astro';
-import Nav from '../components/Nav.astro';
+import BaseLayout from './BaseLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="ja">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<title>{title} — Masafumi Misawa</title>
-		<meta name="description" content={description} />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
-			rel="stylesheet"
-		/>
-	</head>
-
-	<body>
-		<Nav />
-		<main>
-			<article>
-				{heroImage && (
-					<div class="hero-image">
-						<Image width={960} height={480} src={heroImage} alt="" class="hero-img" />
-					</div>
-				)}
-				<div class="prose">
-					<header class="post-header">
-						<p class="post-date">
-							<FormattedDate date={pubDate} />
-							{updatedDate && (
-								<span class="updated"> · Updated <FormattedDate date={updatedDate} /></span>
-							)}
-						</p>
-						<h1>{title}</h1>
-					</header>
-					<slot />
+<BaseLayout title={`${title} — Masafumi Misawa`} description={description}>
+	<main>
+		<article>
+			{heroImage && (
+				<div class="hero-image">
+					<Image width={960} height={480} src={heroImage} alt="" class="hero-img" />
 				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+			)}
+			<div class="prose">
+				<header class="post-header">
+					<p class="post-date">
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<span class="updated"> · Updated <FormattedDate date={updatedDate} /></span>
+						)}
+					</p>
+					<h1>{title}</h1>
+				</header>
+				<slot />
+			</div>
+		</article>
+	</main>
+</BaseLayout>
 
 <style>
-	*,
-	*::before,
-	*::after {
-		box-sizing: border-box;
-		margin: 0;
-		padding: 0;
-	}
-
-	:root {
-		--bg: #0f0f0f;
-		--fg: #e8e8e8;
-		--fg-muted: #888;
-		--accent: #c8f5a0;
-		--border: rgba(255, 255, 255, 0.08);
-		--font-mono: 'DM Mono', 'Fira Mono', monospace;
-		--font-sans: 'DM Sans', system-ui, sans-serif;
-		--max-w: 640px;
-	}
-
-	html {
-		background: var(--bg);
-		color: var(--fg);
-		font-family: var(--font-sans);
-		font-size: 16px;
-		line-height: 1.7;
-		-webkit-font-smoothing: antialiased;
-	}
-
-	body {
-		min-height: 100dvh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 0 1.5rem;
-	}
-
 	main {
 		width: 100%;
 		max-width: var(--max-w);

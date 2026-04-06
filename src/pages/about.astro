@@ -1,161 +1,101 @@
 ---
-import Footer from '../components/Footer.astro';
-import Nav from '../components/Nav.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <title>About — Masafumi Misawa</title>
-    <meta name="description" content="Software Engineer based in Japan. Building web apps with Go and MySQL." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+<BaseLayout title="About — Masafumi Misawa">
+  <main>
+    <!-- About Me -->
+    <section class="about fade-up delay-1">
+      <img src="/avatar.png" alt="Masafumi Misawa" class="avatar" width="80" height="80" />
+      <div>
+        <h1 class="section-title">About me</h1>
+        <p class="bio">
+          妻と娘と日本で暮らしています。<br />
+          Tunecire Japan で Go と MySQL を使ったWebアプリを開発しています。<br />
+          音楽が大好きです。
+        </p>
+      </div>
+    </section>
 
-  <body>
-    <Nav />
+    <!-- Skills -->
+    <section class="fade-up delay-2">
+      <h2 class="section-title">Skills</h2>
 
-    <main>
-      <!-- About Me -->
-      <section class="about fade-up delay-1">
-        <img src="/avatar.png" alt="Masafumi Misawa" class="avatar" width="80" height="80" />
-        <div>
-          <h1 class="section-title">About me</h1>
-          <p class="bio">
-            妻と娘と日本で暮らしています。<br />
-            Tunecire Japan で Go と MySQL を使ったWebアプリを開発しています。<br />
-            音楽が大好きです。
-          </p>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3 class="skill-group-label">Backend</h3>
+          <ul class="skill-list">
+            <li>Go (Echo)</li>
+            <li>Perl</li>
+            <li>MySQL</li>
+          </ul>
         </div>
-      </section>
 
-      <!-- Skills -->
-      <section class="fade-up delay-2">
-        <h2 class="section-title">Skills</h2>
+        <div class="skill-group">
+          <h3 class="skill-group-label">Frontend</h3>
+          <ul class="skill-list">
+            <li>HTML / CSS</li>
+            <li>JavaScript / TypeScript</li>
+            <li>React, Next.js</li>
+          </ul>
+        </div>
 
-        <div class="skill-groups">
-          <div class="skill-group">
-            <h3 class="skill-group-label">Backend</h3>
-            <ul class="skill-list">
-              <li>Go (Echo)</li>
-              <li>Perl</li>
-              <li>MySQL</li>
-            </ul>
-          </div>
+        <div class="skill-group">
+          <h3 class="skill-group-label">Infrastructure</h3>
+          <ul class="skill-list">
+            <li>Docker</li>
+            <li>AWS</li>
+          </ul>
+        </div>
 
-          <div class="skill-group">
-            <h3 class="skill-group-label">Frontend</h3>
-            <ul class="skill-list">
-              <li>HTML / CSS</li>
-              <li>JavaScript / TypeScript</li>
-              <li>React, Next.js</li>
-            </ul>
-          </div>
+        <div class="skill-group">
+          <h3 class="skill-group-label">Tools</h3>
+          <ul class="skill-list">
+            <li>Git, GitHub, GitHub Actions</li>
+            <li>Editor: Neovim</li>
+            <li>Terminal: WezTerm</li>
+            <li>Shell: zsh</li>
+            <li>macOS</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-          <div class="skill-group">
-            <h3 class="skill-group-label">Infrastructure</h3>
-            <ul class="skill-list">
-              <li>Docker</li>
-              <li>AWS</li>
-            </ul>
-          </div>
+    <!-- Background -->
+    <section class="fade-up delay-3">
+      <h2 class="section-title">Background</h2>
 
-          <div class="skill-group">
-            <h3 class="skill-group-label">Tools</h3>
-            <ul class="skill-list">
-              <li>Git, GitHub, GitHub Actions</li>
-              <li>Editor: Neovim</li>
-              <li>Terminal: WezTerm</li>
-              <li>Shell: zsh</li>
-              <li>macOS</li>
-            </ul>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-dot"></span>
+          <div class="timeline-content">
+            <span class="timeline-date">2020 / 3</span>
+            <p class="timeline-desc">電気通信大学　卒業</p>
           </div>
         </div>
-      </section>
 
-      <!-- Background -->
-      <section class="fade-up delay-3">
-        <h2 class="section-title">Background</h2>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="timeline-content">
-              <span class="timeline-date">2020 / 3</span>
-              <p class="timeline-desc">電気通信大学　卒業</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="timeline-content">
-              <span class="timeline-date">2020 / 4 〜</span>
-              <p class="timeline-title">株式会社デンソーテン</p>
-            </div>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-dot"></span>
-            <div class="timeline-content">
-              <span class="timeline-date">2022 / 1 〜</span>
-              <p class="timeline-title">Wano株式会社</p>
-              <p class="timeline-desc">Tunocore Japan の開発</p>
-            </div>
+        <div class="timeline-item">
+          <span class="timeline-dot"></span>
+          <div class="timeline-content">
+            <span class="timeline-date">2020 / 4 〜</span>
+            <p class="timeline-title">株式会社デンソーテン</p>
           </div>
         </div>
-      </section>
-    </main>
 
-    <Footer />
-  </body>
-</html>
+        <div class="timeline-item">
+          <span class="timeline-dot"></span>
+          <div class="timeline-content">
+            <span class="timeline-date">2022 / 1 〜</span>
+            <p class="timeline-title">Wano株式会社</p>
+            <p class="timeline-desc">Tunocore Japan の開発</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
 
 <style>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  :root {
-    --bg: #0f0f0f;
-    --fg: #e8e8e8;
-    --fg-muted: #888;
-    --accent: #c8f5a0;
-    --border: rgba(255, 255, 255, 0.08);
-    --card-bg: rgba(255, 255, 255, 0.04);
-    --font-mono: 'DM Mono', 'Fira Mono', monospace;
-    --font-sans: 'DM Sans', system-ui, sans-serif;
-    --max-w: 640px;
-  }
-
-  html {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--font-sans);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body {
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 1.5rem;
-  }
-
   /* ── Layout ── */
   main {
     width: 100%;

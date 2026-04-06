@@ -3,6 +3,7 @@
 
 <footer>
   <p>© {new Date().getFullYear()} Masafumi Misawa</p>
+  <p>Avatar created with <a href="https://humation.app/" target="_blank" rel="noopener noreferrer">Humation</a></p>
 </footer>
 
 <style>
@@ -14,6 +15,14 @@
     font-family: 'DM Mono', 'Fira Mono', monospace;
     font-size: 0.75rem;
     color: #888;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  footer a {
+    color: #888;
+    text-underline-offset: 3px;
   }
 
   @media (max-width: 480px) {

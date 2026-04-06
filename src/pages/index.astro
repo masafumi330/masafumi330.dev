@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getArticles } from '../lib/notion';
 
 const GITHUB_URL = 'https://github.com/masafumi330';
 const X_URL = 'https://x.com/masafumi330';
+
+const recentArticles = (await getArticles()).slice(0, 5);
 ---
 
 <BaseLayout title="masafumi330" lang="en">
@@ -82,6 +85,26 @@ I love music. <a href="https://open.spotify.com/user/313b4o5wwdkwdvuwz4wzrz6qy3k
         <span class="arrow" aria-hidden="true">→</span>
       </a>
     </section>
+
+    <!-- Articles -->
+    {recentArticles.length > 0 && (
+      <section class="articles fade-up delay-3">
+        <div class="section-header">
+          <h2 class="section-title">Articles</h2>
+          <a href="/articles" class="view-all">View all →</a>
+        </div>
+        <ul class="article-list">
+          {recentArticles.map((article) => (
+            <li class="article-item">
+              <a href={`/articles/${article.slug}/`} class="article-link">
+                <span class="article-title">{article.title}</span>
+                {article.date && <span class="article-date">{article.date}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
   </main>
 </BaseLayout>
 
@@ -246,6 +269,79 @@ I love music. <a href="https://open.spotify.com/user/313b4o5wwdkwdvuwz4wzrz6qy3k
   }
   .delay-3 {
     animation-delay: 0.3s;
+  }
+
+  /* ── Articles ── */
+  .articles {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .view-all {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .view-all:hover {
+    color: var(--accent);
+  }
+
+  .article-list {
+    list-style: none;
+  }
+
+  .article-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    text-decoration: none;
+    color: var(--fg);
+    transition: color 0.2s;
+  }
+
+  .article-link:hover .article-title {
+    color: rgba(200, 245, 160, 0.9);
+  }
+
+  .article-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .article-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+    flex-shrink: 0;
   }
 
   /* ── Responsive ── */

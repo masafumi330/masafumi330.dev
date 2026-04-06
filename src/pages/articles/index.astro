@@ -1,96 +1,161 @@
 ---
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import { getArticles } from '../../lib/notion';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const posts = (await getCollection('articles')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const allArticles = await getArticles();
+
+const tabs = ['all', 'daily', 'tech'] as const;
+type Tab = (typeof tabs)[number];
+
+const tabLabels: Record<Tab, string> = {
+  all: 'すべて',
+  daily: '日記',
+  tech: '技術',
+};
 ---
 
-<BaseLayout title="Articles">
-	<main>
-		<h1 class="page-title fade-up">Articles</h1>
-		<ul class="post-list fade-up delay-1">
-			{
-				posts.map((post) => (
-					<li class="post-item">
-						<a href={`/articles/${post.id}/`} class="post-link">
-							<h2 class="post-title">{post.data.title}</h2>
-							<p class="post-date">
-								<FormattedDate date={post.data.pubDate} />
-							</p>
-						</a>
-					</li>
-				))
-			}
-		</ul>
-	</main>
+<BaseLayout title="Articles — Masafumi Misawa">
+  <main>
+    <h1 class="page-title fade-up">Articles</h1>
+
+    <div class="tabs fade-up delay-1">
+      {tabs.map((tab) => (
+        <button class="tab" data-tab={tab}>
+          {tabLabels[tab]}
+        </button>
+      ))}
+    </div>
+
+    <ul class="post-list fade-up delay-2" id="post-list">
+      {allArticles.map((article) => (
+        <li class="post-item" data-categories={article.categories.join(',')}>
+          <a href={`/articles/${article.slug}/`} class="post-link">
+            <h2 class="post-title">{article.title}</h2>
+            <p class="post-meta">
+              {article.date && <span class="post-date">{article.date}</span>}
+              {article.categories.length > 0 && (
+                <span class="post-categories">
+                  {article.categories.join(' · ')}
+                </span>
+              )}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
 </BaseLayout>
 
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
+  const items = document.querySelectorAll<HTMLLIElement>('.post-item');
+
+  function setActive(tab: string) {
+    tabs.forEach((t) => t.classList.toggle('active', t.dataset.tab === tab));
+    items.forEach((item) => {
+      const cats = item.dataset.categories ?? '';
+      const show = tab === 'all' || cats.split(',').includes(tab);
+      item.style.display = show ? '' : 'none';
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => setActive(tab.dataset.tab ?? 'all'));
+  });
+
+  setActive('all');
+</script>
+
 <style>
-	main {
-		width: 100%;
-		max-width: var(--max-w);
-		flex: 1;
-		padding: 3rem 0;
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
+  main {
+    width: 100%;
+    max-width: var(--max-w);
+    flex: 1;
+    padding: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-	.page-title {
-		font-size: 1.4rem;
-		font-weight: 500;
-		color: #fff;
-		letter-spacing: -0.01em;
-	}
+  .page-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
 
-	.post-list {
-		list-style: none;
-	}
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+  }
 
-	.post-item {
-		border-bottom: 1px solid var(--border);
-	}
+  .tab {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
 
-	.post-link {
-		display: block;
-		padding: 1.25rem 0;
-		text-decoration: none;
-		color: var(--fg);
-		transition: color 0.2s ease;
-	}
+  .tab:hover,
+  .tab.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200, 245, 160, 0.06);
+  }
 
-	.post-link:hover .post-title {
-		color: rgba(200, 245, 160, 0.9);
-	}
+  .post-list {
+    list-style: none;
+  }
 
-	.post-title {
-		font-size: 1.05rem;
-		font-weight: 600;
-		color: var(--fg);
-		line-height: 1.4;
-		margin-bottom: 0.35rem;
-		transition: color 0.2s ease;
-	}
+  .post-item {
+    border-bottom: 1px solid var(--border);
+  }
 
-	.post-date {
-		font-size: 0.85rem;
-		color: var(--fg-muted);
-	}
+  .post-link {
+    display: block;
+    padding: 1.25rem 0;
+    text-decoration: none;
+    color: var(--fg);
+    transition: color 0.2s ease;
+  }
 
-	@keyframes fadeUp {
-		from { opacity: 0; transform: translateY(16px); }
-		to   { opacity: 1; transform: translateY(0); }
-	}
+  .post-link:hover .post-title {
+    color: rgba(200, 245, 160, 0.9);
+  }
 
-	.fade-up   { animation: fadeUp 0.6s ease both; }
-	.delay-1   { animation-delay: 0.08s; }
+  .post-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
+    transition: color 0.2s ease;
+  }
 
-	@media (max-width: 480px) {
-		main {
-			padding: 3rem 1rem;
-		}
-	}
+  .post-meta {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up   { animation: fadeUp 0.6s ease both; }
+  .delay-1   { animation-delay: 0.08s; }
+  .delay-2   { animation-delay: 0.16s; }
+
+  @media (max-width: 480px) {
+    main { padding: 3rem 1rem; }
+  }
 </style>

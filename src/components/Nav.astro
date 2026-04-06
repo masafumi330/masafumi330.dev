@@ -8,7 +8,9 @@ const isActive = (href: string) =>
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href="/" class="nav-brand">MM</a>
+    <a href="/" class="nav-brand">
+      <img src="/avatar.png" alt="MM" class="nav-avatar" />
+    </a>
     <div class="nav-links">
       <a href="/" class:list={['nav-link', { active: isActive('/') }]}>Home</a>
       <a href="/blog" class:list={['nav-link', { active: isActive('/blog') }]}>Blog</a>
@@ -32,12 +34,16 @@ const isActive = (href: string) =>
   }
 
   .nav-brand {
-    font-family: 'DM Mono', 'Fira Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #c8f5a0;
     text-decoration: none;
-    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .nav-links {

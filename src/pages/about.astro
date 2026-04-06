@@ -1,4 +1,5 @@
 ---
+import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 ---
 
@@ -113,9 +114,7 @@ import Nav from '../components/Nav.astro';
       </section>
     </main>
 
-    <footer class="fade-up delay-4">
-      <p>© {new Date().getFullYear()} Masafumi Misawa</p>
-    </footer>
+    <Footer />
   </body>
 </html>
 
@@ -166,16 +165,6 @@ import Nav from '../components/Nav.astro';
     display: flex;
     flex-direction: column;
     gap: 4rem;
-  }
-
-  footer {
-    width: 100%;
-    max-width: var(--max-w);
-    padding: 2rem 0;
-    border-top: 1px solid var(--border);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--fg-muted);
   }
 
   /* ── Section titles ── */
@@ -326,10 +315,6 @@ import Nav from '../components/Nav.astro';
     main {
       padding: 2rem 1rem 2rem;
       gap: 3rem;
-    }
-
-    footer {
-      padding: 1rem 1rem;
     }
 
     .about {

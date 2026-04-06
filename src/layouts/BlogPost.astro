@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
+import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
@@ -49,9 +50,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				</div>
 			</article>
 		</main>
-		<footer>
-			<p>© {new Date().getFullYear()} Masafumi Misawa</p>
-		</footer>
+		<Footer />
 	</body>
 </html>
 
@@ -97,16 +96,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		max-width: var(--max-w);
 		flex: 1;
 		padding: 3rem 0;
-	}
-
-	footer {
-		width: 100%;
-		max-width: var(--max-w);
-		padding: 2rem 0;
-		border-top: 1px solid var(--border);
-		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		color: var(--fg-muted);
 	}
 
 	.hero-image {
@@ -214,10 +203,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	@media (max-width: 480px) {
 		main {
 			padding: 3rem 1rem;
-		}
-
-		footer {
-			padding: 1rem 1rem;
 		}
 	}
 </style>

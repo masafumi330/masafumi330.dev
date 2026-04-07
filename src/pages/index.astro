@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getArticles } from '../lib/notion';
+import { getPublishedArticles } from '../lib/notion';
 
 const GITHUB_URL = 'https://github.com/masafumi330';
 const X_URL = 'https://x.com/masafumi330';
 
-const recentArticles = (await getArticles()).slice(0, 5);
+const recentArticles = (await getPublishedArticles()).slice(0, 5);
 ---
 
 <BaseLayout title="masafumi330" lang="en">

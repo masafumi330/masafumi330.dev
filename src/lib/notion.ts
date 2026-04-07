@@ -32,6 +32,17 @@ export async function getArticles(): Promise<Article[]> {
     .filter((article) => article.slug !== '');
 }
 
+export async function getPublishedArticles(): Promise<Article[]> {
+  const articles = await getArticles();
+  const results = await Promise.all(
+    articles.map(async (article) => {
+      const blocks = await getArticleBlocks(article.id);
+      return blocks.length > 0 ? article : null;
+    })
+  );
+  return results.filter((a): a is Article => a !== null);
+}
+
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,

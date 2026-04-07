@@ -1,9 +1,9 @@
 ---
-import { getArticles, getArticleBySlug, getArticleBlocks, blocksToHtml } from '../../lib/notion';
+import { getPublishedArticles, getArticleBySlug, getArticleBlocks, blocksToHtml } from '../../lib/notion';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const articles = await getArticles();
+  const articles = await getPublishedArticles();
   return articles.map((article) => ({ params: { slug: article.slug } }));
 }
 

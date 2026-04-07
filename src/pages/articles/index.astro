@@ -1,8 +1,8 @@
 ---
-import { getArticles } from '../../lib/notion';
+import { getPublishedArticles } from '../../lib/notion';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const allArticles = await getArticles();
+const allArticles = await getPublishedArticles();
 
 const tabs = ['all', 'daily', 'tech'] as const;
 type Tab = (typeof tabs)[number];

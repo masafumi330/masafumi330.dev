@@ -28,7 +28,8 @@ export async function getArticles(): Promise<Article[]> {
 
   return response.results
     .filter((page): page is PageObjectResponse => 'properties' in page)
-    .map(pageToArticle);
+    .map(pageToArticle)
+    .filter((article) => article.slug !== '');
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
@@ -206,7 +207,7 @@ function pageToArticle(page: PageObjectResponse): Article {
   const slug =
     slugProp?.type === 'rich_text'
       ? slugProp.rich_text.map((t) => t.plain_text).join('')
-      : page.id;
+      : '';
 
   const dateProp = props['date'];
   const date =

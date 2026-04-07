@@ -16,7 +16,7 @@ export type Article = {
   status: string;
 };
 
-export async function getArticles(): Promise<Article[]> {
+async function getArticles(): Promise<Article[]> {
   const response = await notion.databases.query({
     database_id: DATABASE_ID,
     filter: {

@@ -7,6 +7,11 @@ export async function getStaticPaths() {
   return articles.map((article) => ({ params: { slug: article.slug } }));
 }
 
+const categoryLabels: Record<string, string> = {
+  daily: '日記',
+  tech: '技術',
+};
+
 const { slug } = Astro.params;
 const article = await getArticleBySlug(slug);
 
@@ -28,7 +33,7 @@ const contentHtml = blocksToHtml(blocks);
           )}
           <h1>{article.title}</h1>
           {article.categories.length > 0 && (
-            <p class="post-categories">{article.categories.join(' · ')}</p>
+            <p class="post-categories">{article.categories.map((c) => categoryLabels[c] ?? c).join(' · ')}</p>
           )}
         </header>
         <div set:html={contentHtml} />

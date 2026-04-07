@@ -12,6 +12,11 @@ const tabLabels: Record<Tab, string> = {
   daily: '日記',
   tech: '技術',
 };
+
+const categoryLabels: Record<string, string> = {
+  daily: '日記',
+  tech: '技術',
+};
 ---
 
 <BaseLayout title="Articles — Masafumi Misawa">
@@ -35,7 +40,7 @@ const tabLabels: Record<Tab, string> = {
               {article.date && <span class="post-date">{article.date}</span>}
               {article.categories.length > 0 && (
                 <span class="post-categories">
-                  {article.categories.join(' · ')}
+                  {article.categories.map((c) => categoryLabels[c] ?? c).join(' · ')}
                 </span>
               )}
             </p>

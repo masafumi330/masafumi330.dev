@@ -173,4 +173,28 @@ const contentHtml = blocksToHtml(blocks);
   @media (max-width: 480px) {
     main { padding: 3rem 1rem; }
   }
+
+  .prose :global(.mermaid) {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
 </style>
+
+<script>
+  import mermaid from 'mermaid';
+
+  mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+
+  document.querySelectorAll('pre > code.language-mermaid').forEach((code) => {
+    const text = code.textContent ?? '';
+    const div = document.createElement('div');
+    div.className = 'mermaid';
+    div.textContent = text;
+    code.parentElement!.replaceWith(div);
+  });
+
+  mermaid.run();
+</script>

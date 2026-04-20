@@ -60,25 +60,39 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return page ? pageToArticle(page) : null;
 }
 
-export async function getArticleBlocks(pageId: string): Promise<BlockObjectResponse[]> {
+export type BlockWithChildren = BlockObjectResponse & {
+  _tableRows?: BlockObjectResponse[];
+};
+
+async function fetchBlockChildren(blockId: string): Promise<BlockObjectResponse[]> {
   const blocks: BlockObjectResponse[] = [];
   let cursor: string | undefined;
-
   do {
     const response = await notion.blocks.children.list({
-      block_id: pageId,
+      block_id: blockId,
       start_cursor: cursor,
       page_size: 100,
     });
-    blocks.push(
-      ...response.results.filter(
-        (b): b is BlockObjectResponse => 'type' in b,
-      ),
-    );
+    blocks.push(...response.results.filter((b): b is BlockObjectResponse => 'type' in b));
     cursor = response.next_cursor ?? undefined;
   } while (cursor);
-
   return blocks;
+}
+
+export async function getArticleBlocks(pageId: string): Promise<BlockWithChildren[]> {
+  const blocks = await fetchBlockChildren(pageId);
+
+  const extended: BlockWithChildren[] = await Promise.all(
+    blocks.map(async (block) => {
+      if (block.type === 'table') {
+        const rows = await fetchBlockChildren(block.id);
+        return { ...block, _tableRows: rows };
+      }
+      return block;
+    }),
+  );
+
+  return extended;
 }
 
 type RichTextItem = {
@@ -113,12 +127,12 @@ function richTextToHtml(items: RichTextItem[]): string {
     .join('');
 }
 
-export function blocksToHtml(blocks: BlockObjectResponse[]): string {
+export function blocksToHtml(blocks: BlockWithChildren[]): string {
   const html: string[] = [];
   let i = 0;
 
   while (i < blocks.length) {
-    const block = blocks[i] as BlockObjectResponse & Record<string, unknown>;
+    const block = blocks[i] as BlockWithChildren & Record<string, unknown>;
     const type = block.type as string;
 
     // Bulleted list: wrap consecutive items in <ul>
@@ -195,6 +209,18 @@ export function blocksToHtml(blocks: BlockObjectResponse[]): string {
       }
       case 'divider': {
         html.push('<hr>');
+        break;
+      }
+      case 'table': {
+        const tableBlock = block['table'] as { has_column_header: boolean };
+        const rows = block._tableRows ?? [];
+        const rowsHtml = rows.map((row, rowIdx) => {
+          const cells = ((row as Record<string, unknown>)['table_row'] as { cells: RichTextItem[][] }).cells;
+          const tag = tableBlock.has_column_header && rowIdx === 0 ? 'th' : 'td';
+          const cellsHtml = cells.map((cell) => `<${tag}>${richTextToHtml(cell)}</${tag}>`).join('');
+          return `<tr>${cellsHtml}</tr>`;
+        });
+        html.push(`<table>${rowsHtml.join('')}</table>`);
         break;
       }
     }

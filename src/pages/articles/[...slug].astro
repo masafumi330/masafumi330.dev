@@ -23,7 +23,11 @@ const blocks = await getArticleBlocks(article.id);
 const contentHtml = blocksToHtml(blocks);
 ---
 
-<BaseLayout title={`${article.title} — Masafumi Misawa`}>
+<BaseLayout
+  title={`${article.title} — Masafumi Misawa`}
+  image={`/og/${article.slug}.png`}
+  ogType="article"
+>
   <main>
     <article>
       <div class="prose">

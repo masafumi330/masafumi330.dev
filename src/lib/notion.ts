@@ -1,4 +1,4 @@
-import { Client } from '@notionhq/client';
+import { Client, APIErrorCode, isNotionClientError } from '@notionhq/client';
 import type {
   PageObjectResponse,
   BlockObjectResponse,
@@ -16,15 +16,28 @@ export type Article = {
   status: string;
 };
 
+// レート制限（平均 3 req/s）に当たったら待ってから再試行する。
+async function withRetry<T>(fn: () => Promise<T>, retries = 5): Promise<T> {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const rateLimited = isNotionClientError(err) && err.code === APIErrorCode.RateLimited;
+      if (!rateLimited || attempt >= retries) throw err;
+      await new Promise((resolve) => setTimeout(resolve, 1000 * 2 ** attempt));
+    }
+  }
+}
+
 async function getArticles(): Promise<Article[]> {
-  const response = await notion.databases.query({
+  const response = await withRetry(() => notion.databases.query({
     database_id: DATABASE_ID,
     filter: {
       property: 'status',
       status: { equals: 'published' },
     },
     sorts: [{ property: 'date', direction: 'descending' }],
-  });
+  }));
 
   return response.results
     .filter((page): page is PageObjectResponse => 'properties' in page)
@@ -32,7 +45,19 @@ async function getArticles(): Promise<Article[]> {
     .filter((article) => article.slug !== '');
 }
 
-export async function getPublishedArticles(): Promise<Article[]> {
+// ビルド中は複数のページから呼ばれるため、Notion API のレート制限に
+// かからないよう結果をプロセス内でキャッシュする。
+let publishedArticlesCache: Promise<Article[]> | undefined;
+
+export function getPublishedArticles(): Promise<Article[]> {
+  publishedArticlesCache ??= fetchPublishedArticles().catch((err) => {
+    publishedArticlesCache = undefined;
+    throw err;
+  });
+  return publishedArticlesCache;
+}
+
+async function fetchPublishedArticles(): Promise<Article[]> {
   const articles = await getArticles();
   const results = await Promise.all(
     articles.map(async (article) => {
@@ -44,20 +69,8 @@ export async function getPublishedArticles(): Promise<Article[]> {
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const response = await notion.databases.query({
-    database_id: DATABASE_ID,
-    filter: {
-      and: [
-        { property: 'slug', rich_text: { equals: slug } },
-        { property: 'status', status: { equals: 'published' } },
-      ],
-    },
-  });
-
-  const page = response.results.find(
-    (p): p is PageObjectResponse => 'properties' in p,
-  );
-  return page ? pageToArticle(page) : null;
+  const articles = await getPublishedArticles();
+  return articles.find((article) => article.slug === slug) ?? null;
 }
 
 export type BlockWithChildren = BlockObjectResponse & {
@@ -68,18 +81,32 @@ async function fetchBlockChildren(blockId: string): Promise<BlockObjectResponse[
   const blocks: BlockObjectResponse[] = [];
   let cursor: string | undefined;
   do {
-    const response = await notion.blocks.children.list({
+    const response = await withRetry(() => notion.blocks.children.list({
       block_id: blockId,
       start_cursor: cursor,
       page_size: 100,
-    });
+    }));
     blocks.push(...response.results.filter((b): b is BlockObjectResponse => 'type' in b));
     cursor = response.next_cursor ?? undefined;
   } while (cursor);
   return blocks;
 }
 
-export async function getArticleBlocks(pageId: string): Promise<BlockWithChildren[]> {
+const articleBlocksCache = new Map<string, Promise<BlockWithChildren[]>>();
+
+export function getArticleBlocks(pageId: string): Promise<BlockWithChildren[]> {
+  let cached = articleBlocksCache.get(pageId);
+  if (!cached) {
+    cached = fetchArticleBlocks(pageId).catch((err) => {
+      articleBlocksCache.delete(pageId);
+      throw err;
+    });
+    articleBlocksCache.set(pageId, cached);
+  }
+  return cached;
+}
+
+async function fetchArticleBlocks(pageId: string): Promise<BlockWithChildren[]> {
   const blocks = await fetchBlockChildren(pageId);
 
   const extended: BlockWithChildren[] = await Promise.all(

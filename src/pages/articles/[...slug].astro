@@ -144,6 +144,24 @@ const contentHtml = blocksToHtml(blocks);
     margin-bottom: 0.25rem;
   }
 
+  .prose :global(li > ul),
+  .prose :global(li > ol) {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+  }
+
+  .prose :global(ul ul) {
+    list-style-type: circle;
+  }
+
+  .prose :global(ul ul ul) {
+    list-style-type: square;
+  }
+
+  .prose :global(ul ul ul ul) {
+    list-style-type: disc;
+  }
+
   .prose :global(blockquote) {
     border-left: 2px solid var(--accent);
     padding-left: 1rem;

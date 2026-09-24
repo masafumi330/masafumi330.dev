@@ -75,7 +75,12 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 
 export type BlockWithChildren = BlockObjectResponse & {
   _tableRows?: BlockObjectResponse[];
+  _children?: BlockWithChildren[];
 };
+
+// 子ブロックを再帰的に取得して描画する種別。
+// child_page / child_database も has_children を持つが、別ページの中身を展開しないよう対象外にする。
+const NESTABLE_TYPES = new Set(['bulleted_list_item', 'numbered_list_item']);
 
 async function fetchBlockChildren(blockId: string): Promise<BlockObjectResponse[]> {
   const blocks: BlockObjectResponse[] = [];
@@ -114,6 +119,9 @@ async function fetchArticleBlocks(pageId: string): Promise<BlockWithChildren[]> 
       if (block.type === 'table') {
         const rows = await fetchBlockChildren(block.id);
         return { ...block, _tableRows: rows };
+      }
+      if (block.has_children && NESTABLE_TYPES.has(block.type)) {
+        return { ...block, _children: await fetchArticleBlocks(block.id) };
       }
       return block;
     }),
@@ -168,7 +176,8 @@ export function blocksToHtml(blocks: BlockWithChildren[]): string {
       while (i < blocks.length && (blocks[i] as typeof block).type === 'bulleted_list_item') {
         const b = blocks[i] as typeof block;
         const rt = (b['bulleted_list_item'] as { rich_text: RichTextItem[] }).rich_text;
-        items.push(`<li>${richTextToHtml(rt)}</li>`);
+        const children = b._children ? blocksToHtml(b._children) : '';
+        items.push(`<li>${richTextToHtml(rt)}${children}</li>`);
         i++;
       }
       html.push(`<ul>${items.join('')}</ul>`);
@@ -181,7 +190,8 @@ export function blocksToHtml(blocks: BlockWithChildren[]): string {
       while (i < blocks.length && (blocks[i] as typeof block).type === 'numbered_list_item') {
         const b = blocks[i] as typeof block;
         const rt = (b['numbered_list_item'] as { rich_text: RichTextItem[] }).rich_text;
-        items.push(`<li>${richTextToHtml(rt)}</li>`);
+        const children = b._children ? blocksToHtml(b._children) : '';
+        items.push(`<li>${richTextToHtml(rt)}${children}</li>`);
         i++;
       }
       html.push(`<ol>${items.join('')}</ol>`);

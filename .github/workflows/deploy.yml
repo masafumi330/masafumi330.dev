@@ -29,10 +29,9 @@ jobs:
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: masafumi330-dev
-          directory: dist
+          command: pages deploy dist --project-name=masafumi330-dev --branch=${{ github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
